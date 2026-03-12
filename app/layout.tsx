@@ -11,7 +11,6 @@ const geistMono = Geist_Mono({ subsets: ["latin"], variable: '--font-mono' });
 export const metadata: Metadata = {
   title: 'EduNation - Learn Better, Achieve More',
   description: 'India\'s premier online learning platform for Class 6-12, JEE, NEET & skill courses',
-  generator: 'v0.app',
   icons: {
     icon: [
       {
