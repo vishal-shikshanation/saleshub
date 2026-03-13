@@ -1,41 +1,59 @@
-'use client'
+"use client";
 
-import Link from 'next/link'
-import { useState, useMemo } from 'react'
-import { EXAMS } from '@/lib/staticData'
-import { FiClock, FiTarget, FiBookOpen, FiChevronRight, FiFilter, FiSearch } from 'react-icons/fi'
+import Link from "next/link";
+import { useState, useMemo } from "react";
+import { EXAMS } from "@/lib/staticData";
+import {
+  FiClock,
+  FiTarget,
+  FiBookOpen,
+  FiChevronRight,
+  FiFilter,
+  FiSearch,
+} from "react-icons/fi";
 
-const CATEGORIES = ['All', 'Class 6-8', 'Class 9-10', 'Class 11-12', 'JEE', 'NEET']
-const DIFFICULTIES = ['All', 'Easy', 'Medium', 'Hard']
+const CATEGORIES = [
+  "All",
+  "Class 6-8",
+  "Class 9-10",
+  "Class 11-12",
+  "JEE",
+  "NEET",
+];
+const DIFFICULTIES = ["All", "Easy", "Medium", "Hard"];
 
 export default function ExamsPage() {
-  const [selectedCategory, setSelectedCategory] = useState('All')
-  const [selectedDifficulty, setSelectedDifficulty] = useState('All')
-  const [searchQuery, setSearchQuery] = useState('')
-  const [showFilters, setShowFilters] = useState(false)
+  const [selectedCategory, setSelectedCategory] = useState("All");
+  const [selectedDifficulty, setSelectedDifficulty] = useState("All");
+  const [searchQuery, setSearchQuery] = useState("");
+  const [showFilters, setShowFilters] = useState(false);
 
   const filteredExams = useMemo(() => {
     return EXAMS.filter((exam) => {
-      const matchesCategory = selectedCategory === 'All' || exam.category === selectedCategory
-      const matchesDifficulty = selectedDifficulty === 'All' || exam.difficulty === selectedDifficulty
-      const matchesSearch = exam.title.toLowerCase().includes(searchQuery.toLowerCase())
+      const matchesCategory =
+        selectedCategory === "All" || exam.category === selectedCategory;
+      const matchesDifficulty =
+        selectedDifficulty === "All" || exam.difficulty === selectedDifficulty;
+      const matchesSearch = exam.title
+        .toLowerCase()
+        .includes(searchQuery.toLowerCase());
 
-      return matchesCategory && matchesDifficulty && matchesSearch
-    })
-  }, [selectedCategory, selectedDifficulty, searchQuery])
+      return matchesCategory && matchesDifficulty && matchesSearch;
+    });
+  }, [selectedCategory, selectedDifficulty, searchQuery]);
 
   const getDifficultyColor = (difficulty: string) => {
     switch (difficulty) {
-      case 'Easy':
-        return 'text-green-600 bg-green-50 dark:bg-green-950/30 border-green-200 dark:border-green-800'
-      case 'Medium':
-        return 'text-yellow-600 bg-yellow-50 dark:bg-yellow-950/30 border-yellow-200 dark:border-yellow-800'
-      case 'Hard':
-        return 'text-red-600 bg-red-50 dark:bg-red-950/30 border-red-200 dark:border-red-800'
+      case "Easy":
+        return "text-green-600 bg-green-50 dark:bg-green-950/30 border-green-200 dark:border-green-800";
+      case "Medium":
+        return "text-yellow-600 bg-yellow-50 dark:bg-yellow-950/30 border-yellow-200 dark:border-yellow-800";
+      case "Hard":
+        return "text-red-600 bg-red-50 dark:bg-red-950/30 border-red-200 dark:border-red-800";
       default:
-        return 'text-gray-600 bg-gray-50 dark:bg-gray-950/30 border-gray-200 dark:border-gray-800'
+        return "text-gray-600 bg-gray-50 dark:bg-gray-950/30 border-gray-200 dark:border-gray-800";
     }
-  }
+  };
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 min-h-[calc(100vh-4rem)]">
@@ -49,7 +67,10 @@ export default function ExamsPage() {
 
       {/* Search Bar */}
       <div className="mb-8 relative">
-        <FiSearch className="absolute left-4 top-3.5 text-foreground/40" size={20} />
+        <FiSearch
+          className="absolute left-4 top-3.5 text-foreground/40"
+          size={20}
+        />
         <input
           type="text"
           placeholder="Search exams..."
@@ -68,7 +89,10 @@ export default function ExamsPage() {
               <h3 className="font-semibold text-foreground mb-3">Category</h3>
               <div className="space-y-2">
                 {CATEGORIES.map((category) => (
-                  <label key={category} className="flex items-center gap-2 cursor-pointer">
+                  <label
+                    key={category}
+                    className="flex items-center gap-2 cursor-pointer"
+                  >
                     <input
                       type="radio"
                       name="category"
@@ -77,7 +101,9 @@ export default function ExamsPage() {
                       onChange={(e) => setSelectedCategory(e.target.value)}
                       className="w-4 h-4 accent-primary"
                     />
-                    <span className="text-sm text-foreground/70">{category}</span>
+                    <span className="text-sm text-foreground/70">
+                      {category}
+                    </span>
                   </label>
                 ))}
               </div>
@@ -88,7 +114,10 @@ export default function ExamsPage() {
               <h3 className="font-semibold text-foreground mb-3">Difficulty</h3>
               <div className="space-y-2">
                 {DIFFICULTIES.map((difficulty) => (
-                  <label key={difficulty} className="flex items-center gap-2 cursor-pointer">
+                  <label
+                    key={difficulty}
+                    className="flex items-center gap-2 cursor-pointer"
+                  >
                     <input
                       type="radio"
                       name="difficulty"
@@ -97,19 +126,23 @@ export default function ExamsPage() {
                       onChange={(e) => setSelectedDifficulty(e.target.value)}
                       className="w-4 h-4 accent-primary"
                     />
-                    <span className="text-sm text-foreground/70">{difficulty}</span>
+                    <span className="text-sm text-foreground/70">
+                      {difficulty}
+                    </span>
                   </label>
                 ))}
               </div>
             </div>
 
             {/* Clear Filters */}
-            {(selectedCategory !== 'All' || selectedDifficulty !== 'All' || searchQuery) && (
+            {(selectedCategory !== "All" ||
+              selectedDifficulty !== "All" ||
+              searchQuery) && (
               <button
                 onClick={() => {
-                  setSelectedCategory('All')
-                  setSelectedDifficulty('All')
-                  setSearchQuery('')
+                  setSelectedCategory("All");
+                  setSelectedDifficulty("All");
+                  setSearchQuery("");
                 }}
                 className="w-full py-2 px-3 bg-muted text-foreground rounded-lg hover:bg-muted/80 transition-colors text-sm font-medium"
               >
@@ -136,7 +169,10 @@ export default function ExamsPage() {
                 <h3 className="font-semibold text-foreground mb-3">Category</h3>
                 <div className="space-y-2">
                   {CATEGORIES.map((category) => (
-                    <label key={category} className="flex items-center gap-2 cursor-pointer">
+                    <label
+                      key={category}
+                      className="flex items-center gap-2 cursor-pointer"
+                    >
                       <input
                         type="radio"
                         name="category"
@@ -145,7 +181,9 @@ export default function ExamsPage() {
                         onChange={(e) => setSelectedCategory(e.target.value)}
                         className="w-4 h-4 accent-primary"
                       />
-                      <span className="text-sm text-foreground/70">{category}</span>
+                      <span className="text-sm text-foreground/70">
+                        {category}
+                      </span>
                     </label>
                   ))}
                 </div>
@@ -153,10 +191,15 @@ export default function ExamsPage() {
 
               {/* Difficulty Filter */}
               <div>
-                <h3 className="font-semibold text-foreground mb-3">Difficulty</h3>
+                <h3 className="font-semibold text-foreground mb-3">
+                  Difficulty
+                </h3>
                 <div className="space-y-2">
                   {DIFFICULTIES.map((difficulty) => (
-                    <label key={difficulty} className="flex items-center gap-2 cursor-pointer">
+                    <label
+                      key={difficulty}
+                      className="flex items-center gap-2 cursor-pointer"
+                    >
                       <input
                         type="radio"
                         name="difficulty"
@@ -165,7 +208,9 @@ export default function ExamsPage() {
                         onChange={(e) => setSelectedDifficulty(e.target.value)}
                         className="w-4 h-4 accent-primary"
                       />
-                      <span className="text-sm text-foreground/70">{difficulty}</span>
+                      <span className="text-sm text-foreground/70">
+                        {difficulty}
+                      </span>
                     </label>
                   ))}
                 </div>
@@ -188,7 +233,9 @@ export default function ExamsPage() {
                     <div className="flex items-start justify-between mb-4">
                       <div className="flex-1">
                         <div className="flex items-center gap-2 mb-2">
-                          <span className={`px-2.5 py-1 rounded text-xs font-semibold border ${getDifficultyColor(exam.difficulty)}`}>
+                          <span
+                            className={`px-2.5 py-1 rounded text-xs font-semibold border ${getDifficultyColor(exam.difficulty)}`}
+                          >
                             {exam.difficulty}
                           </span>
                           <span className="inline-block bg-secondary/10 text-secondary px-2.5 py-1 rounded text-xs font-semibold">
@@ -198,9 +245,14 @@ export default function ExamsPage() {
                         <h3 className="text-xl font-bold text-foreground group-hover:text-primary transition-colors">
                           {exam.title}
                         </h3>
-                        <p className="text-foreground/70 text-sm mt-1">{exam.description}</p>
+                        <p className="text-foreground/70 text-sm mt-1">
+                          {exam.description}
+                        </p>
                       </div>
-                      <FiChevronRight className="text-foreground/40 group-hover:text-primary transition-colors flex-shrink-0" size={24} />
+                      <FiChevronRight
+                        className="text-foreground/40 group-hover:text-primary transition-colors flex-shrink-0"
+                        size={24}
+                      />
                     </div>
 
                     <div className="grid grid-cols-3 gap-4 pt-4 border-t border-border">
@@ -210,11 +262,15 @@ export default function ExamsPage() {
                       </div>
                       <div className="flex items-center gap-2 text-foreground/70">
                         <FiBookOpen size={16} className="text-secondary" />
-                        <span className="text-sm">{exam.totalQuestions} Questions</span>
+                        <span className="text-sm">
+                          {exam.totalQuestions} Questions
+                        </span>
                       </div>
                       <div className="flex items-center gap-2 text-foreground/70">
                         <FiTarget size={16} className="text-secondary" />
-                        <span className="text-sm">Pass: {exam.passingScore}%</span>
+                        <span className="text-sm">
+                          Pass: {exam.passingScore}%
+                        </span>
                       </div>
                     </div>
                   </div>
@@ -224,7 +280,9 @@ export default function ExamsPage() {
           ) : (
             <div className="flex flex-col items-center justify-center py-16 text-center">
               <div className="text-5xl mb-4">📋</div>
-              <h2 className="text-2xl font-bold text-foreground mb-2">No Exams Found</h2>
+              <h2 className="text-2xl font-bold text-foreground mb-2">
+                No Exams Found
+              </h2>
               <p className="text-foreground/70 max-w-md">
                 Try adjusting your filters to find the exams you're looking for.
               </p>
@@ -233,5 +291,5 @@ export default function ExamsPage() {
         </div>
       </div>
     </div>
-  )
+  );
 }
