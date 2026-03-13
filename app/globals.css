@@ -2,12 +2,10 @@
 @import 'tw-animate-css';
 @import 'shadcn/tailwind.css';
 
-@custom-variant dark (&:is(.dark *));
-
 :root {
   --background: #ffffff;
   --foreground: #1a1a1a;
-  --card: #f9f9f9;
+  --card: #ffffff;
   --card-foreground: #1a1a1a;
   --popover: #ffffff;
   --popover-foreground: #1a1a1a;
@@ -15,7 +13,7 @@
   --primary-foreground: #ffffff;
   --secondary: #6CB84D;
   --secondary-foreground: #ffffff;
-  --muted: #f0f0f0;
+  --muted: #f5f5f5;
   --muted-foreground: #707070;
   --accent: #016AB7;
   --accent-foreground: #ffffff;
@@ -27,10 +25,10 @@
   --chart-1: #016AB7;
   --chart-2: #6CB84D;
   --chart-3: #0f766e;
-  --chart-4: #7c3aed;
-  --chart-5: #db2777;
+  --chart-4: #016AB7;
+  --chart-5: #6CB84D;
   --radius: 0.625rem;
-  --sidebar: #f9f9f9;
+  --sidebar: #ffffff;
   --sidebar-foreground: #1a1a1a;
   --sidebar-primary: #016AB7;
   --sidebar-primary-foreground: #ffffff;
@@ -40,44 +38,9 @@
   --sidebar-ring: #016AB7;
 }
 
-.dark {
-  --background: #0f0f0f;
-  --foreground: #f5f5f5;
-  --card: #1a1a1a;
-  --card-foreground: #f5f5f5;
-  --popover: #1a1a1a;
-  --popover-foreground: #f5f5f5;
-  --primary: #016AB7;
-  --primary-foreground: #ffffff;
-  --secondary: #6CB84D;
-  --secondary-foreground: #ffffff;
-  --muted: #2a2a2a;
-  --muted-foreground: #a0a0a0;
-  --accent: #016AB7;
-  --accent-foreground: #ffffff;
-  --destructive: #ef4444;
-  --destructive-foreground: #ffffff;
-  --border: #333333;
-  --input: #2a2a2a;
-  --ring: #016AB7;
-  --chart-1: #016AB7;
-  --chart-2: #6CB84D;
-  --chart-3: #0d9488;
-  --chart-4: #a78bfa;
-  --chart-5: #ec4899;
-  --sidebar: #1a1a1a;
-  --sidebar-foreground: #f5f5f5;
-  --sidebar-primary: #016AB7;
-  --sidebar-primary-foreground: #ffffff;
-  --sidebar-accent: #6CB84D;
-  --sidebar-accent-foreground: #ffffff;
-  --sidebar-border: #333333;
-  --sidebar-ring: #016AB7;
-}
-
 @theme inline {
-  --font-sans: 'Geist', 'Geist Fallback';
-  --font-mono: 'Geist Mono', 'Geist Mono Fallback';
+  --font-sans: 'Inter', 'Inter Fallback', system-ui, sans-serif;
+  --font-mono: ui-monospace, monospace;
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-card: var(--card);

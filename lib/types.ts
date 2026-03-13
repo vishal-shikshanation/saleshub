@@ -15,7 +15,7 @@ export interface Course {
   id: string
   title: string
   description: string
-  category: 'Class 6-8' | 'Class 9-10' | 'Class 11-12' | 'JEE' | 'NEET'
+  category: 'Sales Training' | 'Product Training' | 'Tools Training' | 'Soft Skills'
   level: 'Beginner' | 'Intermediate' | 'Advanced'
   instructor: string
   instructorAvatar?: string
@@ -46,7 +46,7 @@ export interface Exam {
   id: string
   title: string
   description: string
-  category: 'Class 6-8' | 'Class 9-10' | 'Class 11-12' | 'JEE' | 'NEET'
+  category: 'Sales Training' | 'Product Training' | 'Tools Training' | 'Soft Skills'
   difficulty: 'Easy' | 'Medium' | 'Hard'
   duration: number // in minutes
   totalQuestions: number

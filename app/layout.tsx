@@ -1,25 +1,17 @@
-import type { Metadata } from 'next'
-import { Geist, Geist_Mono } from 'next/font/google'
+import type { Metadata, Viewport } from 'next'
+import { Inter } from 'next/font/google'
 import { Analytics } from '@vercel/analytics/next'
-import { Navbar } from '@/components/Navbar'
-import { Footer } from '@/components/Footer'
 import './globals.css'
 
-const geist = Geist({ subsets: ["latin"], variable: '--font-sans' });
-const geistMono = Geist_Mono({ subsets: ["latin"], variable: '--font-mono' });
+const inter = Inter({ subsets: ["latin"], variable: '--font-sans' });
 
 export const metadata: Metadata = {
-  title: 'EduNation - Learn Better, Achieve More',
-  description: 'India\'s premier online learning platform for Class 6-12, JEE, NEET & skill courses',
+  title: 'Shikshanation SalesHub - Internal Training Platform',
+  description: 'Internal sales training platform for the Shikshanation team',
   icons: {
     icon: [
       {
         url: '/icon-light-32x32.png',
-        media: '(prefers-color-scheme: light)',
-      },
-      {
-        url: '/icon-dark-32x32.png',
-        media: '(prefers-color-scheme: dark)',
       },
       {
         url: '/icon.svg',
@@ -28,11 +20,12 @@ export const metadata: Metadata = {
     ],
     apple: '/apple-icon.png',
   },
-  viewport: {
-    width: 'device-width',
-    initialScale: 1,
-    maximumScale: 1,
-  }
+}
+
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 1,
 }
 
 export default function RootLayout({
@@ -41,13 +34,9 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en" className={`${geist.variable} ${geistMono.variable}`}>
+    <html lang="en" className={inter.variable}>
       <body className="font-sans antialiased bg-background text-foreground">
-        <Navbar />
-        <main className="min-h-screen">
-          {children}
-        </main>
-        <Footer />
+        {children}
         <Analytics />
       </body>
     </html>
