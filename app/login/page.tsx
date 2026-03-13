@@ -1,9 +1,8 @@
 'use client'
 
-import { useState } from 'react'
-import Link from 'next/link'
+import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
-import { FiMail, FiLock, FiAlertCircle, FiLoader } from 'react-icons/fi'
+import { FiMail, FiLock, FiAlertCircle, FiLoader, FiEye, FiEyeOff } from 'react-icons/fi'
 
 export default function LoginPage() {
   const router = useRouter()
@@ -13,14 +12,20 @@ export default function LoginPage() {
   const [loading, setLoading] = useState(false)
   const [showPassword, setShowPassword] = useState(false)
 
+  useEffect(() => {
+    // If already logged in, redirect to dashboard
+    const user = localStorage.getItem('user')
+    if (user) {
+      router.push('/dashboard')
+    }
+  }, [router])
+
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault()
     setError('')
     setLoading(true)
 
     try {
-      // Replace with actual Auth0 integration
-      // For now, we'll use localStorage simulation
       if (!email || !password) {
         setError('Please fill in all fields')
         setLoading(false)
@@ -36,11 +41,11 @@ export default function LoginPage() {
       // Simulate API call
       await new Promise((resolve) => setTimeout(resolve, 1000))
 
-      // Store user data (replace with Auth0 token)
+      // Store user data
       const userData = {
         id: '1',
         email,
-        name: email.split('@')[0],
+        name: email.split('@')[0].charAt(0).toUpperCase() + email.split('@')[0].slice(1),
       }
 
       localStorage.setItem('user', JSON.stringify(userData))
@@ -55,48 +60,60 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="min-h-[calc(100vh-4rem)] flex items-center justify-center bg-gradient-to-br from-blue-50 to-green-50 dark:from-slate-900 dark:to-slate-800 px-4">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-primary/5 to-secondary/5 px-4 py-12">
       <div className="w-full max-w-md">
+        {/* Logo & Branding */}
+        <div className="text-center mb-8">
+          <div className="inline-flex items-center justify-center w-16 h-16 bg-primary rounded-2xl mb-4">
+            <span className="text-primary-foreground font-bold text-2xl">SH</span>
+          </div>
+          <h1 className="text-2xl font-bold text-foreground">
+            <span className="text-primary">Shikshanation</span>
+            <span className="text-secondary ml-2">SalesHub</span>
+          </h1>
+          <p className="text-muted-foreground mt-2">Internal Training Platform</p>
+        </div>
+
         {/* Card */}
-        <div className="bg-card border border-border rounded-lg shadow-lg p-8 space-y-6">
+        <div className="bg-card border border-border rounded-xl shadow-lg p-8 space-y-6">
           {/* Header */}
-          <div className="space-y-2">
-            <h1 className="text-3xl font-bold text-foreground">Welcome Back</h1>
-            <p className="text-foreground/70">Sign in to your EduNation account</p>
+          <div className="space-y-1">
+            <h2 className="text-xl font-semibold text-foreground">Welcome Back</h2>
+            <p className="text-sm text-muted-foreground">Sign in to access your training materials</p>
           </div>
 
           {/* Test Credentials Display */}
           <div className="bg-primary/5 border border-primary/20 rounded-lg p-4">
             <p className="text-xs font-semibold text-primary mb-2">TEST CREDENTIALS</p>
-            <div className="space-y-1 text-xs text-foreground/70">
-              <p><span className="font-medium">Email:</span> test@eduNation.com</p>
-              <p><span className="font-medium">Password:</span> Test@123</p>
+            <div className="space-y-1 text-xs text-muted-foreground">
+              <p><span className="font-medium text-foreground">Email:</span> demo@shikshanation.com</p>
+              <p><span className="font-medium text-foreground">Password:</span> Demo@123</p>
             </div>
           </div>
 
           {/* Error Alert */}
           {error && (
             <div className="bg-destructive/10 border border-destructive/20 rounded-lg p-4 flex items-start gap-3">
-              <FiAlertCircle className="text-destructive flex-shrink-0 mt-0.5" size={20} />
+              <FiAlertCircle className="text-destructive flex-shrink-0 mt-0.5" size={18} />
               <p className="text-destructive text-sm">{error}</p>
             </div>
           )}
 
           {/* Form */}
-          <form onSubmit={handleLogin} className="space-y-4">
+          <form onSubmit={handleLogin} className="space-y-5">
             {/* Email */}
             <div>
               <label className="block text-sm font-medium text-foreground mb-2">
                 Email Address
               </label>
               <div className="relative">
-                <FiMail className="absolute left-3 top-3.5 text-foreground/40" size={20} />
+                <FiMail className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground" size={18} />
                 <input
                   type="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  placeholder="you@example.com"
-                  className="w-full pl-10 pr-4 py-2 border border-border rounded-lg bg-input text-foreground placeholder:text-foreground/40 focus:outline-none focus:ring-2 focus:ring-primary transition-colors"
+                  placeholder="you@shikshanation.com"
+                  className="w-full pl-10 pr-4 py-2.5 border border-border rounded-lg bg-input text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary transition-colors"
                   disabled={loading}
                 />
               </div>
@@ -108,82 +125,55 @@ export default function LoginPage() {
                 Password
               </label>
               <div className="relative">
-                <FiLock className="absolute left-3 top-3.5 text-foreground/40" size={20} />
+                <FiLock className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground" size={18} />
                 <input
                   type={showPassword ? 'text' : 'password'}
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  placeholder="••••••••"
-                  className="w-full pl-10 pr-10 py-2 border border-border rounded-lg bg-input text-foreground placeholder:text-foreground/40 focus:outline-none focus:ring-2 focus:ring-primary transition-colors"
+                  placeholder="Enter your password"
+                  className="w-full pl-10 pr-12 py-2.5 border border-border rounded-lg bg-input text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary transition-colors"
                   disabled={loading}
                 />
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-3 top-3.5 text-foreground/40 hover:text-foreground transition-colors"
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors"
                   tabIndex={-1}
                 >
-                  {showPassword ? '👁️' : '👁️‍🗨️'}
+                  {showPassword ? <FiEyeOff size={18} /> : <FiEye size={18} />}
                 </button>
               </div>
             </div>
 
-            {/* Remember & Forgot */}
-            <div className="flex items-center justify-between text-sm">
+            {/* Remember Me */}
+            <div className="flex items-center justify-between">
               <label className="flex items-center gap-2 cursor-pointer">
                 <input
                   type="checkbox"
-                  className="w-4 h-4 rounded border-border bg-input text-primary focus:ring-primary cursor-pointer"
+                  className="w-4 h-4 rounded border-border bg-input text-primary focus:ring-primary cursor-pointer accent-primary"
                   defaultChecked
                 />
-                <span className="text-foreground/70">Remember me</span>
+                <span className="text-sm text-muted-foreground">Remember me</span>
               </label>
-              <Link href="#" className="text-primary hover:underline font-medium">
-                Forgot password?
-              </Link>
             </div>
 
             {/* Submit */}
             <button
               type="submit"
               disabled={loading}
-              className="w-full py-2 px-4 bg-primary text-primary-foreground font-semibold rounded-lg hover:opacity-90 transition-opacity disabled:opacity-50 flex items-center justify-center gap-2"
+              className="w-full py-2.5 px-4 bg-primary text-primary-foreground font-semibold rounded-lg hover:bg-primary/90 transition-colors disabled:opacity-50 flex items-center justify-center gap-2"
             >
-              {loading && <FiLoader size={20} className="animate-spin" />}
+              {loading && <FiLoader size={18} className="animate-spin" />}
               {loading ? 'Signing in...' : 'Sign In'}
             </button>
           </form>
-
-          {/* Divider */}
-          <div className="flex items-center gap-4">
-            <div className="flex-1 h-px bg-border" />
-            <span className="text-xs text-foreground/50 uppercase tracking-wide">Or</span>
-            <div className="flex-1 h-px bg-border" />
-          </div>
-
-          {/* Social Login */}
-          <button
-            type="button"
-            className="w-full py-2 px-4 border border-border rounded-lg font-medium text-foreground hover:bg-muted transition-colors flex items-center justify-center gap-2"
-          >
-            <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
-              <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0z" />
-            </svg>
-            Continue with Google
-          </button>
-
-          {/* Sign Up Link */}
-          <p className="text-center text-foreground/70">
-            Don't have an account?{' '}
-            <Link href="/signup" className="text-primary font-semibold hover:underline">
-              Sign up
-            </Link>
-          </p>
         </div>
 
         {/* Footer Note */}
-        <p className="text-center text-xs text-foreground/50 mt-6">
-          Protected by industry-standard security. Your data is safe with us.
+        <p className="text-center text-xs text-muted-foreground mt-6">
+          This is an internal platform for Shikshanation sales team only.
+          <br />
+          Contact your administrator if you need access.
         </p>
       </div>
     </div>

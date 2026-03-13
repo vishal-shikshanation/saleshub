@@ -1,32 +1,23 @@
 import Link from 'next/link'
 import { Course } from '@/lib/types'
-import { FiStar, FiUsers, FiClock } from 'react-icons/fi'
+import { FiStar, FiUsers, FiClock, FiBookOpen } from 'react-icons/fi'
 
 interface CourseCardProps {
   course: Course
 }
 
 export function CourseCard({ course }: CourseCardProps) {
-  const discountPercent = course.originalPrice
-    ? Math.round(((course.originalPrice - course.price) / course.originalPrice) * 100)
-    : 0
-
   return (
     <Link href={`/courses/${course.id}`}>
-      <div className="bg-card border border-border rounded-lg overflow-hidden hover:shadow-lg transition-shadow h-full cursor-pointer">
+      <div className="bg-card border border-border rounded-xl overflow-hidden hover:shadow-lg hover:border-primary/50 transition-all h-full cursor-pointer group">
         {/* Thumbnail */}
         <div className="relative overflow-hidden bg-muted h-40">
           <img
             src={course.thumbnail}
             alt={course.title}
-            className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
+            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
           />
-          {discountPercent > 0 && (
-            <div className="absolute top-3 right-3 bg-destructive text-destructive-foreground px-3 py-1 rounded-full text-sm font-semibold">
-              {discountPercent}% OFF
-            </div>
-          )}
-          <span className="absolute top-3 left-3 bg-primary/90 text-primary-foreground px-2 py-1 rounded text-xs font-semibold">
+          <span className="absolute top-3 left-3 bg-primary text-primary-foreground px-2.5 py-1 rounded text-xs font-semibold">
             {course.level}
           </span>
         </div>
@@ -39,47 +30,50 @@ export function CourseCard({ course }: CourseCardProps) {
           </span>
 
           {/* Title */}
-          <h3 className="font-bold text-lg line-clamp-2 text-foreground">
+          <h3 className="font-bold text-lg line-clamp-2 text-foreground group-hover:text-primary transition-colors">
             {course.title}
           </h3>
 
-          {/* Instructor */}
-          <p className="text-sm text-foreground/70 line-clamp-1">
-            {course.instructor}
+          {/* Description */}
+          <p className="text-sm text-muted-foreground line-clamp-2">
+            {course.description}
           </p>
 
           {/* Spacer */}
           <div className="flex-1" />
 
           {/* Stats */}
-          <div className="flex items-center gap-3 text-xs text-foreground/60 py-2 border-t border-border">
+          <div className="flex items-center gap-4 text-xs text-muted-foreground py-2 border-t border-border">
             <div className="flex items-center gap-1">
               <FiStar size={14} className="text-yellow-500" fill="currentColor" />
-              <span>{course.rating.toFixed(1)}</span>
-              <span className="text-foreground/40">({course.ratingCount})</span>
+              <span className="font-medium">{course.rating.toFixed(1)}</span>
             </div>
             <div className="flex items-center gap-1">
               <FiUsers size={14} />
-              <span>{(course.studentsCount / 1000).toFixed(1)}K</span>
+              <span>{course.studentsCount.toLocaleString()}</span>
+            </div>
+            <div className="flex items-center gap-1">
+              <FiBookOpen size={14} />
+              <span>{course.chapters.length} chapters</span>
             </div>
           </div>
 
-          {/* Chapters Info */}
-          <div className="flex items-center gap-1 text-xs text-foreground/60">
-            <FiClock size={14} />
-            <span>{course.chapters.length} chapters</span>
-          </div>
-
-          {/* Price */}
+          {/* Instructor */}
           <div className="flex items-center gap-2 pt-2">
-            <span className="text-lg font-bold text-primary">
-              ₹{course.price.toLocaleString()}
-            </span>
-            {course.originalPrice && (
-              <span className="text-sm text-foreground/50 line-through">
-                ₹{course.originalPrice.toLocaleString()}
-              </span>
-            )}
+            <div className="w-7 h-7 rounded-full overflow-hidden bg-primary/10">
+              {course.instructorAvatar ? (
+                <img
+                  src={course.instructorAvatar}
+                  alt={course.instructor}
+                  className="w-full h-full object-cover"
+                />
+              ) : (
+                <div className="w-full h-full flex items-center justify-center text-primary font-bold text-xs">
+                  {course.instructor.charAt(0)}
+                </div>
+              )}
+            </div>
+            <span className="text-sm text-muted-foreground">{course.instructor}</span>
           </div>
         </div>
       </div>
