@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { User } from '@/lib/types'
-import { Mail, Phone, MapPin, Edit2, Save, X, Camera, Award, TrendingUp, Book } from 'react-icons/fi'
+import { FiMail, FiPhone, FiMapPin, FiEdit2, FiSave, FiX, FiCamera, FiAward, FiTrendingUp, FiBook } from 'react-icons/fi'
 
 export default function ProfilePage() {
   const router = useRouter()
@@ -116,12 +116,12 @@ export default function ProfilePage() {
             >
               {editing ? (
                 <>
-                  <Save size={18} />
+                  <FiSave size={18} />
                   Save Changes
                 </>
               ) : (
                 <>
-                  <Edit2 size={18} />
+                  <FiEdit2 size={18} />
                   Edit Profile
                 </>
               )}
@@ -245,7 +245,7 @@ export default function ProfilePage() {
         {/* Learning Progress */}
         <div className="bg-card border border-border rounded-lg p-6">
           <h3 className="font-bold text-foreground text-lg mb-4 flex items-center gap-2">
-            <TrendingUp size={20} className="text-primary" />
+            <FiTrendingUp size={20} className="text-primary" />
             Learning Progress
           </h3>
           <div className="space-y-4">
@@ -274,7 +274,7 @@ export default function ProfilePage() {
         {/* Achievements */}
         <div className="bg-card border border-border rounded-lg p-6">
           <h3 className="font-bold text-foreground text-lg mb-4 flex items-center gap-2">
-            <Award size={20} className="text-secondary" />
+            <FiAward size={20} className="text-secondary" />
             Achievements
           </h3>
           <div className="grid grid-cols-3 gap-4">
